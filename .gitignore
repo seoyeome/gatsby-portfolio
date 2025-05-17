@@ -1,0 +1,19 @@
+# Gatsby files
+.cache/
+public/
+
+# dependencies
+/node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# environment variables
+.env
+.env.*
+
+# Personal images - 개인 이미지 보호
+/src/images/Profile.JPG
+/src/images/portfolio-screenshot.png
