@@ -235,21 +235,11 @@ const Projects = () => {
           )
         }
       }
-      placeholderImage: file(relativePath: { eq: "gatsby-icon.png" }) {
-        childImageSharp {
-          gatsbyImageData(
-            width: 600
-            placeholder: BLURRED
-            formats: [AUTO, WEBP]
-          )
-        }
-      }
     }
   `);
   
   // 이미지 객체 가져오기
   const portfolioImage = getImage(data.portfolioImage);
-  const placeholderImage = getImage(data.placeholderImage) || portfolioImage;
   
   // Sample project data - in a real app, this would come from a data source
   const projects = [
@@ -267,7 +257,7 @@ const Projects = () => {
       id: 2,
       title: '면접 질문 생성기',
       description: 'Next.js, TailwindCSS, Spring Boot/Kotlin, PostgreSQL 을 사용한 사이드 프로젝트입니다. 면접 질문 생성 구현했습니다.',
-      image: placeholderImage,
+      image: portfolioImage,
       tags: ['React', 'Node.js', 'Express', 'MongoDB'],
       demoLink: '#',
       codeLink: '#',
@@ -277,7 +267,7 @@ const Projects = () => {
       id: 3,
       title: '날씨 앱',
       description: '위치 기반 날씨 정보를 제공하는 모바일 앱입니다. 현재 날씨와 5일 예보를 확인할 수 있습니다.',
-      image: placeholderImage,
+      image: portfolioImage,
       tags: ['React Native', 'API Integration'],
       demoLink: '#',
       codeLink: '#',
@@ -287,7 +277,7 @@ const Projects = () => {
       id: 4,
       title: '할 일 관리 앱',
       description: '할 일을 추가, 편집, 삭제할 수 있는 웹 애플리케이션입니다. 로컬 스토리지를 활용하여 데이터를 저장합니다.',
-      image: placeholderImage,
+      image: portfolioImage,
       tags: ['JavaScript', 'HTML/CSS', 'LocalStorage'],
       demoLink: '#',
       codeLink: '#',
@@ -297,7 +287,7 @@ const Projects = () => {
       id: 5,
       title: '데이터 시각화 대시보드',
       description: '다양한 데이터를 시각적으로 표현하는 대시보드입니다. 차트와 그래프를 활용하여 데이터를 분석할 수 있습니다.',
-      image: placeholderImage,
+      image: portfolioImage,
       tags: ['React', 'D3.js', 'Chart.js'],
       demoLink: '#',
       codeLink: '#',
@@ -307,7 +297,7 @@ const Projects = () => {
       id: 6,
       title: '소셜 미디어 앱',
       description: '사용자 간 소통이 가능한 소셜 미디어 플랫폼입니다. 게시물 작성, 댓글, 좋아요 기능을 구현했습니다.',
-      image: placeholderImage,
+      image: portfolioImage,
       tags: ['React', 'Firebase', 'Authentication'],
       demoLink: '#',
       codeLink: '#',
