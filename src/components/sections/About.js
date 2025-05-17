@@ -189,7 +189,7 @@ const About = () => {
               objectFit="cover"
               objectPosition="center 30%"
               quality={95}
-              formats={["auto", "webp", "avif"]}
+              formats={["auto", "webp"]}
               style={{ 
                 borderRadius: "10px",
                 margin: "0 auto",
