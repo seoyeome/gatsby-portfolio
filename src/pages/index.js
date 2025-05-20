@@ -21,7 +21,7 @@ const IndexPage = () => {
       <About />
       <Skills />
       <Projects />
-      <Contact />
+      {/*<Contact />*/}
     </Layout>
   );
 };

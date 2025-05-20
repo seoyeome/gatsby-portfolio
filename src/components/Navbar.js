@@ -168,16 +168,16 @@ const Navbar = () => {
           >
             Projects
           </NavLink>
-          <NavLink 
-            to="contact" 
-            smooth={true} 
-            duration={500} 
-            spy={true} 
-            activeClass="active"
-            onClick={() => setIsOpen(false)}
-          >
-            Contact
-          </NavLink>
+          {/*<NavLink */}
+          {/*  to="contact" */}
+          {/*  smooth={true} */}
+          {/*  duration={500} */}
+          {/*  spy={true} */}
+          {/*  activeClass="active"*/}
+          {/*  onClick={() => setIsOpen(false)}*/}
+          {/*>*/}
+          {/*  Contact*/}
+          {/*</NavLink>*/}
         </NavLinks>
       </NavInner>
     </NavbarContainer>
