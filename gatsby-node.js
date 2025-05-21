@@ -6,14 +6,13 @@
 
 const path = require('path');
 // 프로젝트 데이터 가져오기
-const projectsData = require('./src/data/projects').default;
+const projectsData = require('./src/data/projects');
 
 /**
  * @type {import('gatsby').GatsbyNode['createPages']}
  */
 exports.createPages = async ({ actions }) => {
   const { createPage } = actions;
-
 
   // 프로젝트 상세 페이지 템플릿
   const projectDetailTemplate = path.resolve(`src/templates/ProjectDetail.js`);

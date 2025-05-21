@@ -66,4 +66,5 @@ const projectsData = [
   }
 ];
 
-export default projectsData;
+// 모듈 내보내기
+module.exports = projectsData;
