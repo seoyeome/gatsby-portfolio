@@ -33,7 +33,7 @@ module.exports = {
     //     background_color: `#1a1a2e`,
     //     theme_color: `#8a2be2`,
     //     display: `minimal-ui`,
-    //     icon: `src/images/gatsby-icon.png`, // This will be created
+    //     icon: `src/images/`, // This will be created
     //   },
     // },
   ],

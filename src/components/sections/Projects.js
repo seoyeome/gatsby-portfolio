@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { graphql, useStaticQuery } from 'gatsby';
+import { graphql, useStaticQuery, Link } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
+import projectsData from '../../data/projects';
 
 const ProjectsSection = styled.section`
   background-color: var(--dark-bg);
@@ -91,7 +92,7 @@ const ProjectsGrid = styled.div`
   }
 `;
 
-const ProjectCard = styled.div`
+const ProjectCard = styled(Link)`
   background-color: var(--light-bg);
   border-radius: 10px;
   overflow: hidden;
@@ -100,6 +101,8 @@ const ProjectCard = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  text-decoration: none;
+  color: inherit;
   
   &:hover {
     transform: translateY(-10px);
@@ -222,92 +225,54 @@ const ViewMoreButton = styled.button`
 
 const Projects = () => {
   const [filter, setFilter] = useState('all');
+  const [visibleCount, setVisibleCount] = useState(6);
   
   // GraphQL 쿼리로 이미지 가져오기
   const data = useStaticQuery(graphql`
     query {
-      portfolioImage: file(relativePath: { eq: "portfolio-screenshot.png" }) {
-        childImageSharp {
-          gatsbyImageData(
-            width: 600
-            placeholder: BLURRED
-            formats: [AUTO, WEBP]
-          )
+      allFile(filter: {relativePath: {regex: "/.*\\.(png|jpg|jpeg)/"}}) {
+        edges {
+          node {
+            relativePath
+            childImageSharp {
+              gatsbyImageData(
+                width: 600
+                placeholder: BLURRED
+                formats: [AUTO, WEBP]
+              )
+            }
+          }
         }
       }
     }
   `);
   
-  // 이미지 객체 가져오기
-  const portfolioImage = getImage(data.portfolioImage);
+  // 이미지 맵 생성 (상대 경로 -> 이미지 객체)
+  const imagesMap = {};
+  data.allFile.edges.forEach(edge => {
+    imagesMap[edge.node.relativePath] = getImage(edge.node.childImageSharp);
+  });
   
-  // Sample project data - in a real app, this would come from a data source
-  const projects = [
-    {
-      id: 1,
-      title: '포트폴리오 웹사이트',
-      description: 'Gatsby와 React를 활용한 개인 포트폴리오 웹사이트입니다. 국제화 및 반응형 디자인을 적용했습니다.',
-      image: portfolioImage,
-      tags: ['React', 'Gatsby', 'Styled Components'],
-      demoLink: '#',
-      codeLink: '#',
-      category: 'web'
-    },
-    {
-      id: 2,
-      title: '면접 질문 생성기',
-      description: 'Next.js, TailwindCSS, Spring Boot/Kotlin, PostgreSQL 을 사용한 사이드 프로젝트입니다. 면접 질문 생성 구현했습니다.',
-      image: portfolioImage,
-      tags: ['React', 'Node.js', 'Express', 'MongoDB'],
-      demoLink: '#',
-      codeLink: '#',
-      category: 'web'
-    },
-    {
-      id: 3,
-      title: '날씨 앱',
-      description: '위치 기반 날씨 정보를 제공하는 모바일 앱입니다. 현재 날씨와 5일 예보를 확인할 수 있습니다.',
-      image: portfolioImage,
-      tags: ['React Native', 'API Integration'],
-      demoLink: '#',
-      codeLink: '#',
-      category: 'mobile'
-    },
-    {
-      id: 4,
-      title: '할 일 관리 앱',
-      description: '할 일을 추가, 편집, 삭제할 수 있는 웹 애플리케이션입니다. 로컬 스토리지를 활용하여 데이터를 저장합니다.',
-      image: portfolioImage,
-      tags: ['JavaScript', 'HTML/CSS', 'LocalStorage'],
-      demoLink: '#',
-      codeLink: '#',
-      category: 'web'
-    },
-    {
-      id: 5,
-      title: '데이터 시각화 대시보드',
-      description: '다양한 데이터를 시각적으로 표현하는 대시보드입니다. 차트와 그래프를 활용하여 데이터를 분석할 수 있습니다.',
-      image: portfolioImage,
-      tags: ['React', 'D3.js', 'Chart.js'],
-      demoLink: '#',
-      codeLink: '#',
-      category: 'data'
-    },
-    {
-      id: 6,
-      title: '소셜 미디어 앱',
-      description: '사용자 간 소통이 가능한 소셜 미디어 플랫폼입니다. 게시물 작성, 댓글, 좋아요 기능을 구현했습니다.',
-      image: portfolioImage,
-      tags: ['React', 'Firebase', 'Authentication'],
-      demoLink: '#',
-      codeLink: '#',
-      category: 'web'
-    }
-  ];
+  // 프로젝트 데이터에 이미지 객체 추가
+  const projects = projectsData.map(project => ({
+    ...project,
+    image: imagesMap[project.imagePath] || null
+  }));
   
   const filteredProjects = filter === 'all' 
     ? projects 
     : projects.filter(project => project.category === filter);
+  
+  // 현재 보여지는 프로젝트 (visibleCount만큼만)
+  const visibleProjects = filteredProjects.slice(0, visibleCount);
+  
+  // 더 보여줄 프로젝트가 있는지 확인
+  const hasMoreProjects = visibleCount < filteredProjects.length;
+  
+  // 더 보기 버튼 클릭 핸들러
+  const handleViewMore = () => {
+    setVisibleCount(prevCount => prevCount + 6);
+  };
   
   return (
     <ProjectsSection id="projects">
@@ -322,38 +287,50 @@ const Projects = () => {
         <FilterContainer>
           <FilterButton 
             active={filter === 'all'} 
-            onClick={() => setFilter('all')}
+            onClick={() => {
+              setFilter('all');
+              setVisibleCount(6); // 필터 변경 시 보이는 개수 초기화
+            }}
           >
             All
           </FilterButton>
           <FilterButton 
             active={filter === 'web'} 
-            onClick={() => setFilter('web')}
+            onClick={() => {
+              setFilter('web');
+              setVisibleCount(6); // 필터 변경 시 보이는 개수 초기화
+            }}
           >
             Web
           </FilterButton>
           <FilterButton 
             active={filter === 'mobile'} 
-            onClick={() => setFilter('mobile')}
+            onClick={() => {
+              setFilter('mobile');
+              setVisibleCount(6); // 필터 변경 시 보이는 개수 초기화
+            }}
           >
             Mobile
           </FilterButton>
           <FilterButton 
             active={filter === 'data'} 
-            onClick={() => setFilter('data')}
+            onClick={() => {
+              setFilter('data');
+              setVisibleCount(6); // 필터 변경 시 보이는 개수 초기화
+            }}
           >
             Data
           </FilterButton>
         </FilterContainer>
         
         <ProjectsGrid>
-          {filteredProjects.map(project => (
-            <ProjectCard key={project.id}>
+          {visibleProjects.map(project => (
+            <ProjectCard key={project.id} to={`/project/${project.id}`}>
               <ProjectImage className="project-image">
                 <GatsbyImage image={project.image} alt={project.title} />
                 <div className="overlay">
-                  <ProjectLink href={project.demoLink} target="_blank" rel="noopener noreferrer">
-                    View Demo
+                  <ProjectLink as="span">
+                    View Details
                   </ProjectLink>
                 </div>
               </ProjectImage>
@@ -369,10 +346,10 @@ const Projects = () => {
                 </ProjectTags>
                 
                 <ProjectLinks>
-                  <ProjectLink href={project.demoLink} target="_blank" rel="noopener noreferrer">
+                  <ProjectLink href={project.demoLink} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
                     <i className="fas fa-external-link-alt"></i> Live Demo
                   </ProjectLink>
-                  <ProjectLink href={project.codeLink} target="_blank" rel="noopener noreferrer">
+                  <ProjectLink href={project.codeLink} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
                     <i className="fab fa-github"></i> Source Code
                   </ProjectLink>
                 </ProjectLinks>
@@ -381,7 +358,11 @@ const Projects = () => {
           ))}
         </ProjectsGrid>
         
-        <ViewMoreButton>View More Projects</ViewMoreButton>
+        {hasMoreProjects && (
+          <ViewMoreButton onClick={handleViewMore}>
+            View More Projects
+          </ViewMoreButton>
+        )}
       </ProjectsContainer>
     </ProjectsSection>
   );
