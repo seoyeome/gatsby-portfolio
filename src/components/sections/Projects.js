@@ -237,7 +237,7 @@ const Projects = () => {
             childImageSharp {
               gatsbyImageData(
                 width: 600
-                placeholder: BLURRED
+                placeholder: DOMINANT_COLOR
                 formats: [AUTO, WEBP]
               )
             }
@@ -254,10 +254,14 @@ const Projects = () => {
   });
   
   // 프로젝트 데이터에 이미지 객체 추가
-  const projects = projectsData.map(project => ({
-    ...project,
-    image: imagesMap[project.imagePath] || null
-  }));
+  const projects = projectsData.map(project => {
+    // 이미지 경로에서 /images/ 접두사 제거하여 상대 경로로 변환
+    const relativePath = project.imagePath.replace(/^\/images\//, '');
+    return {
+      ...project,
+      image: imagesMap[relativePath] || null
+    };
+  });
   
   const filteredProjects = filter === 'all' 
     ? projects 
@@ -327,7 +331,11 @@ const Projects = () => {
           {visibleProjects.map(project => (
             <ProjectCard key={project.id} to={`/project/${project.id}`}>
               <ProjectImage className="project-image">
-                <GatsbyImage image={project.image} alt={project.title} />
+                {project.image ? (
+                  <GatsbyImage image={project.image} alt={project.title} />
+                ) : (
+                  <img src={project.imagePath} alt={project.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                )}
                 <div className="overlay">
                   <ProjectLink as="span">
                     View Details

@@ -552,7 +552,7 @@ export const query = graphql`
         gatsbyImageData(
           width: 1200
           placeholder: DOMINANT_COLOR
-          formats: [AUTO, WEBP, AVIF]
+          formats: [AUTO, WEBP]
           quality: 85
           breakpoints: [576, 768, 992, 1200]
           backgroundColor: "transparent"
@@ -570,7 +570,7 @@ export const query = graphql`
             gatsbyImageData(
               width: 1000
               placeholder: DOMINANT_COLOR
-              formats: [AUTO, WEBP, AVIF]
+              formats: [AUTO, WEBP]
               quality: 85
               breakpoints: [576, 768, 992, 1000]
               backgroundColor: "transparent"
@@ -581,7 +581,7 @@ export const query = graphql`
             modalImage: gatsbyImageData(
               width: 1920
               placeholder: NONE
-              formats: [AUTO, WEBP, AVIF]
+              formats: [AUTO, WEBP]
               quality: 100
               backgroundColor: "transparent"
               transformOptions: {

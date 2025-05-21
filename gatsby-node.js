@@ -19,13 +19,21 @@ exports.createPages = async ({ actions }) => {
 
   // 각 프로젝트에 대한 페이지 생성
   projectsData.forEach(project => {
+    // 이미지 경로에서 /images/ 접두사 제거하여 상대 경로로 변환
+    const imagePath = project.imagePath.replace(/^\/images\//, '');
+    
+    // 추가 이미지 경로도 같은 방식으로 변환
+    const additionalImages = (project.additionalImages || []).map(
+      imgPath => imgPath.replace(/^\/images\//, '')
+    );
+    
     createPage({
       path: `/project/${project.id}`,
       component: projectDetailTemplate,
       context: {
         project,
-        imagePath: project.imagePath,
-        additionalImages: project.additionalImages || []
+        imagePath: imagePath,
+        additionalImages: additionalImages
       },
     });
   });

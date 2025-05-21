@@ -6,7 +6,7 @@ const projectsData = [
     date: '2025.05 ~ ing',
     client: 'Personal Project',
     description: 'Gatsby 프레임워크를 활용한 개인 포트폴리오 웹사이트입니다. 반응형 디자인을 적용했습니다.',
-    imagePath: 'portfolio-screenshot.png',
+    imagePath: '/images/portfolio-screenshot-fixed.png',
     additionalImages: [
     ],
     tags: ['React', 'Gatsby', 'Styled Components'],
@@ -39,10 +39,9 @@ const projectsData = [
     date: '2025.05 ~ ing',
     client: 'Personal Project',
     description: 'Next.js, TailwindCSS, Spring Boot/Kotlin, PostgreSQL 을 사용한 사이드 프로젝트입니다. 면접 질문 생성 구현했습니다.',
-    imagePath: 'interview-generator-dark.png',
+    imagePath: '/images/interview-generator-dark.png',
     additionalImages: [
-      'interview-generator-light.png',
-      'interview-generator-questions.png'
+      '/images/interview-generator-light.png'
     ],
     tags: ['React', 'Node.js', 'Express', 'MongoDB'],
     codeLink: 'https://github.com/seoyeome/interview-questions-frontend',
