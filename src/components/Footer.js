@@ -46,16 +46,16 @@ const Footer = () => {
           © {currentYear} 포트폴리오. All rights reserved.
         </Copyright>
         <SocialLinks>
-          <SocialLink href="https://github.com" target="_blank" rel="noopener noreferrer">
+          <SocialLink href="https://github.com/seoyeome" target="_blank" rel="noopener noreferrer">
             <i className="fab fa-github"></i>
           </SocialLink>
-          <SocialLink href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+          <SocialLink href="https://www.linkedin.com/in/seoyoung-kim-36126b301/" target="_blank" rel="noopener noreferrer">
             <i className="fab fa-linkedin"></i>
           </SocialLink>
-          <SocialLink href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-            <i className="fab fa-twitter"></i>
-          </SocialLink>
-          <SocialLink href="mailto:example@email.com">
+          {/*<SocialLink href="https://twitter.com" target="_blank" rel="noopener noreferrer">*/}
+          {/*  <i className="fab fa-twitter"></i>*/}
+          {/*</SocialLink>*/}
+          <SocialLink href="mailto:seoyeomedev@gamil.com">
             <i className="fas fa-envelope"></i>
           </SocialLink>
         </SocialLinks>
