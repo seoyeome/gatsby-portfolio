@@ -43,7 +43,7 @@ const projectsData = [
     additionalImages: [
       '/images/interview-generator-light.png'
     ],
-    tags: ['React', 'Node.js', 'Express', 'MongoDB'],
+    tags: ['Next.js', 'TailwindCSS', 'Spring Boot', 'Kotlin', 'PostgreSQL'],
     codeLink: 'https://github.com/seoyeome/interview-questions-frontend',
     category: 'web',
     features: [
