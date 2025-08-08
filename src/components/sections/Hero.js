@@ -241,9 +241,9 @@ const Hero = () => {
             >
               프로젝트 보기
             </PrimaryButton>
-            <SecondaryButton href="#" target="_blank">
-              이력서 다운로드
-            </SecondaryButton>
+            {/*<SecondaryButton href="#" target="_blank">*/}
+            {/*  이력서 다운로드*/}
+            {/*</SecondaryButton>*/}
           </ButtonGroup>
         </HeroText>
       </HeroContent>
